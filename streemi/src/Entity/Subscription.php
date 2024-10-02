@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use App\Enum\UserAccountStatusEnum;
-use App\Repository\UserRepository;
+use App\Repository\SubscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User
+#[ORM\Entity(repositoryClass: SubscriptionRepository::class)]
+class Subscription
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,66 +14,51 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    #[ORM\Column]
+    private ?int $price = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
-
-    #[ORM\Column(enumType: UserAccountStatusEnum::class)]
-    private ?UserAccountStatusEnum $accountStatus = null;
+    #[ORM\Column]
+    private ?int $duration = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getName(): ?string
     {
-        return $this->username;
+        return $this->name;
     }
 
-    public function setUsername(string $username): static
+    public function setName(string $name): static
     {
-        $this->username = $username;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getPrice(): ?int
     {
-        return $this->email;
+        return $this->price;
     }
 
-    public function setEmail(string $email): static
+    public function setPrice(int $price): static
     {
-        $this->email = $email;
+        $this->price = $price;
 
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getDuration(): ?int
     {
-        return $this->password;
+        return $this->duration;
     }
 
-    public function setPassword(string $password): static
+    public function setDuration(int $duration): static
     {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getAccountStatus(): ?UserAccountStatusEnum
-    {
-        return $this->accountStatus;
-    }
-
-    public function setAccountStatus(UserAccountStatusEnum $accountStatus): static
-    {
-        $this->accountStatus = $accountStatus;
+        $this->duration = $duration;
 
         return $this;
     }
