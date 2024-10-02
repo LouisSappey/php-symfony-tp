@@ -206,4 +206,7 @@ fabric.properties
 /web/css/
 /web/js/
 
+### Personnal ###
+/command.txt
+
 # End of https://www.toptal.com/developers/gitignore/api/phpstorm,symfony,macos
