@@ -1,0 +1,23 @@
+FROM php:8.2-fpm
+
+WORKDIR /var/www/html
+
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libicu-dev \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install intl opcache zip
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+COPY . .
+
+RUN composer install --no-scripts --no-dev --prefer-dist
+
+RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
