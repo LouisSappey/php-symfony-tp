@@ -1,23 +1,26 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
-WORKDIR /var/www/html
-
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libicu-dev \
+RUN apt-get update -y && apt-get install -y \
+    libmcrypt-dev \
     libzip-dev \
-    zip \
-    && docker-php-ext-install intl opcache zip
+    unzip \
+    git \
+    libicu-dev \
+    libpq-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install pdo pdo_mysql zip intl mbstring xml
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-COPY . .
+WORKDIR /app
 
-RUN composer install --no-scripts --no-dev --prefer-dist
+COPY . /app
 
-RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public
+RUN composer install --no-interaction --optimize-autoloader
 
-EXPOSE 9000
+RUN composer require symfony/debug-bundle --dev
 
-CMD ["php-fpm"]
+EXPOSE 8000
+
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]

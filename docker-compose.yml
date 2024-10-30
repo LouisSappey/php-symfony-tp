@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  symfony_app:
     build:
       context: ./streemi/
       dockerfile: Dockerfile
@@ -9,6 +9,6 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/var/www/html
+      - ./streemi:/app:delegated
     environment:
       APP_ENV: dev
