@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
@@ -18,6 +20,17 @@ class Categorie
 
     #[ORM\Column(length: 255)]
     private ?string $label = null;
+
+    /**
+     * @var Collection<int, Media>
+     */
+    #[ORM\ManyToMany(targetEntity: Media::class, inversedBy: 'categories')]
+    private Collection $categorieMedia;
+
+    public function __construct()
+    {
+        $this->categorieMedia = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +64,30 @@ class Categorie
     public function setLabel(string $label): static
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getCategorieMedia(): Collection
+    {
+        return $this->categorieMedia;
+    }
+
+    public function addCategorieMedium(Media $categorieMedium): static
+    {
+        if (!$this->categorieMedia->contains($categorieMedium)) {
+            $this->categorieMedia->add($categorieMedium);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorieMedium(Media $categorieMedium): static
+    {
+        $this->categorieMedia->removeElement($categorieMedium);
 
         return $this;
     }

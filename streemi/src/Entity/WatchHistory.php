@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WatchHistoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,20 @@ class WatchHistory
 
     #[ORM\Column]
     private ?int $numberOfViews = null;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'watchHistory')]
+    private Collection $userWatchHistory;
+
+    #[ORM\ManyToOne(inversedBy: 'watchHistories')]
+    private ?Media $watchHistoryMedia = null;
+
+    public function __construct()
+    {
+        $this->userWatchHistory = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +91,48 @@ class WatchHistory
     public function setNumberOfViews(int $numberOfViews): static
     {
         $this->numberOfViews = $numberOfViews;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserWatchHistory(): Collection
+    {
+        return $this->userWatchHistory;
+    }
+
+    public function addUserWatchHistory(User $userWatchHistory): static
+    {
+        if (!$this->userWatchHistory->contains($userWatchHistory)) {
+            $this->userWatchHistory->add($userWatchHistory);
+            $userWatchHistory->setWatchHistory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserWatchHistory(User $userWatchHistory): static
+    {
+        if ($this->userWatchHistory->removeElement($userWatchHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($userWatchHistory->getWatchHistory() === $this) {
+                $userWatchHistory->setWatchHistory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getWatchHistoryMedia(): ?Media
+    {
+        return $this->watchHistoryMedia;
+    }
+
+    public function setWatchHistoryMedia(?Media $watchHistoryMedia): static
+    {
+        $this->watchHistoryMedia = $watchHistoryMedia;
 
         return $this;
     }

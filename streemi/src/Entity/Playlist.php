@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlaylistRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
@@ -24,6 +26,21 @@ class Playlist
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'playlists')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $creator = null;
+
+    /**
+     * @var Collection<int, PlaylistSubscriptions>
+     */
+    #[ORM\OneToMany(targetEntity: PlaylistSubscriptions::class, mappedBy: 'subscription')]
+    private Collection $subscription;
+
+    public function __construct()
+    {
+        $this->subscription = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +91,48 @@ class Playlist
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): static
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlaylistSubscriptions>
+     */
+    public function getSubscription(): Collection
+    {
+        return $this->subscription;
+    }
+
+    public function addSubscription(PlaylistSubscriptions $subscription): static
+    {
+        if (!$this->subscription->contains($subscription)) {
+            $this->subscription->add($subscription);
+            $subscription->setSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(PlaylistSubscriptions $subscription): static
+    {
+        if ($this->subscription->removeElement($subscription)) {
+            // set the owning side to null (unless already changed)
+            if ($subscription->getSubscription() === $this) {
+                $subscription->setSubscription(null);
+            }
+        }
 
         return $this;
     }
