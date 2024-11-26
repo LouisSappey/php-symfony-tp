@@ -6,15 +6,21 @@ namespace App\Controller\Movie;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CategorieRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 // category.html.twig confirm.html.twig detail.html.twig detail_serie.html.twig index.html.twig discover.html.twig
 
 class MovieController extends AbstractController
 {
     #[Route(path: '/movies/discover', name: 'page_discover')]
-    public function discover()
+    public function discover(CategorieRepository $categorieRepository): Response
     {
-        return $this->render(view: 'movie/discover.html.twig');
+        $categories = $categorieRepository->findAll();
+        
+        return $this->render('movie/discover.html.twig', [
+            'categories' => $categories,
+        ]);
     }
 
     #[Route(path: '/movies/category', name: 'page_category')]

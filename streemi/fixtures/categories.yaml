@@ -1,0 +1,11 @@
+categories:
+  - name: "Music"
+    description: "All about music"
+  - name: "Movies"
+    description: "All about movies"
+  - name: "Books"
+    description: "All about books"
+  - name: "Games"
+    description: "All about games"
+  - name: "Technology"
+    description: "All about technology"

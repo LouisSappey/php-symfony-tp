@@ -1,0 +1,18 @@
+media:
+  - title: "Inception"
+    mediaType: "movie"
+    shortDescription: "A mind-bending thriller"
+    longDescription: "Dom Cobb is a skilled thief, the best in the dangerous art of extraction: stealing valuable secrets from deep within the subconscious during the dream state."
+    releaseDate: "2010-07-16"
+    coverImage: "inception.jpg"
+    staff: ["Christopher Nolan", "Hans Zimmer"]
+    casting: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"]
+
+  - title: "The Witcher"
+    mediaType: "tv_show"
+    shortDescription: "A fantasy series based on Andrzej Sapkowski's books."
+    longDescription: "The Witcher follows Geralt of Rivia, a mutated monster hunter for hire, as he journeys through a world plagued by magic and monsters."
+    releaseDate: "2019-12-20"
+    coverImage: "the_witcher.jpg"
+    staff: ["Lauren Schmidt Hissrich"]
+    casting: ["Henry Cavill", "Anya Chalotra", "Freya Allan"]
