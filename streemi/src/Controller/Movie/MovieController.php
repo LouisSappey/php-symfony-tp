@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Movie;
 
+use App\Entity\Categorie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategorieRepository;
@@ -20,6 +21,20 @@ class MovieController extends AbstractController
         
         return $this->render('movie/discover.html.twig', [
             'categories' => $categories,
+        ]);
+    }
+
+    #[Route(path: '/movies/{id}', name: 'page_category_by_id')]
+    public function categoryById(int $id, CategorieRepository $categorieRepository): Response
+    {
+        $category = $categorieRepository->find($id);
+
+        if (!$category) {
+            throw $this->createNotFoundException('The category does not exist');
+        }
+
+        return $this->render('movie/category.html.twig', [
+            'category' => $category,
         ]);
     }
 

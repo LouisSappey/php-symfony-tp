@@ -71,10 +71,10 @@
             <div class="flex items-center justify-between">
                 <span class="font-semibold text-gray-700 text-base">Les films</span>
             </div>
-
             <ul class="mt-4 grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5">
-
-                {%include 'parts/horizontal-card-big-movie.html.twig'%}
+                {% for category in category %}
+                    {%include 'parts/horizontal-card-big-movie.html.twig'%}
+                {% endfor %}
             </ul>
             <button class="flex flex-col items-center mt-9 w-full">
                 <a class="relative flex w-full bg-red-600 flex-row p-3 items-center justify-center rounded-lg overflow-hidden border cursor-pointer transition hover:bg-red-700 text-white">
