@@ -1,0 +1,7 @@
+seasons:
+  - season_number: 1
+    serie_id: 1
+  - season_number: 2
+    serie_id: 1
+  - season_number: 1
+    serie_id: 2

@@ -1,0 +1,12 @@
+subscriptions:
+  - name: "Basic Plan"
+    price: 10
+    duration: 30
+
+  - name: "Premium Plan"
+    price: 20
+    duration: 30
+
+  - name: "Annual Plan"
+    price: 200
+    duration: 365

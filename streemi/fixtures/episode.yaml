@@ -1,0 +1,13 @@
+episodes:
+  - title: "Pilot Episode"
+    duration: "00:42:30"
+    release_date: "2023-01-01"
+    season_id: 1
+  - title: "Second Episode"
+    duration: "00:45:00"
+    release_date: "2023-01-08"
+    season_id: 1
+  - title: "Third Episode"
+    duration: "00:48:00"
+    release_date: "2023-01-15"
+    season_id: 2

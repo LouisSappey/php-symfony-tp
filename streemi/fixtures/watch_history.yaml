@@ -1,0 +1,10 @@
+watch_histories:
+  - user_id: 1
+    media_id: 1
+    last_watched: "2024-01-02 12:00:00"
+    number_of_views: 3
+
+  - user_id: 2
+    media_id: 2
+    last_watched: "2024-01-03 20:45:00"
+    number_of_views: 8

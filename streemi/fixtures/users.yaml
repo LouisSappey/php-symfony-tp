@@ -1,0 +1,14 @@
+users:
+  - username: "user1"
+    email: "user1@example.com"
+    password: "password123"
+    account_status: "valid"
+    current_subscription_id: 1
+    watch_history_id: 1
+
+  - username: "user2"
+    email: "user2@example.com"
+    password: "password456"
+    account_status: "pending"
+    current_subscription_id: 2
+    watch_history_id: 2

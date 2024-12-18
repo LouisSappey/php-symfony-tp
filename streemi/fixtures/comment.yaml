@@ -1,0 +1,6 @@
+comment:
+  content: <sentence()>
+  status: <randomElement(['approved', 'pending', 'rejected'])>
+  author: "@user_<numberBetween(1, 10)>"
+  commentMedia: "@media_<numberBetween(1, 10)>"
+  replies: "@comment_<numberBetween(1, 10)>"

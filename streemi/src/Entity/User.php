@@ -7,10 +7,13 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -59,6 +62,9 @@ class User
 
     #[ORM\ManyToOne(inversedBy: 'userWatchHistory')]
     private ?WatchHistory $watchHistory = null;
+
+    #[ORM\Column]
+    private array $roles = [];
 
     public function __construct()
     {
@@ -264,4 +270,29 @@ class User
 
         return $this;
     }
+
+    public function getRoles(): array
+{
+    // Retourne un tableau contenant les rôles de l'utilisateur
+    // Exemple : si vous avez une propriété `roles` stockée en base de données
+    return $this->roles ?? ['ROLE_USER'];
+}
+
+public function getUserIdentifier(): string
+{
+    // Retourne l'identifiant unique de l'utilisateur (par exemple, l'email)
+    return $this->email;
+}
+
+public function eraseCredentials(): void
+{
+    // Utilisé pour nettoyer les données sensibles (non obligatoire dans un cas simple)
+}
+
+public function setRoles(array $roles): static
+{
+    $this->roles = $roles;
+
+    return $this;
+}
 }
