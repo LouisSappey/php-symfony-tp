@@ -10,10 +10,16 @@
 -(docker compose up)
 ```
 
-After that you can go to streemi folder and launch fixtures:
+Now go to folder streemi and do:
 
 ```
 cd streemi
+composer install
+```
+
+After that you can go to streemi folder and launch fixtures:
+
+```
 ./launch-fixtures.sh
 ```
 
