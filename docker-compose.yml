@@ -30,9 +30,15 @@ services:
     image: adminer
     container_name: adminer
     ports:
-      - 8080:8080  # Adminer will be available on http://localhost:8080
+      - 8080:8080
     depends_on:
       - database
+  
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8090:8025"
 
 volumes:
   db_data:

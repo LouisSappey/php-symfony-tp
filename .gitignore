@@ -209,4 +209,7 @@ fabric.properties
 ### Personnal ###
 /command.txt
 
+/launch-fixtures.sh
+commandFixtures.txt
+
 # End of https://www.toptal.com/developers/gitignore/api/phpstorm,symfony,macos

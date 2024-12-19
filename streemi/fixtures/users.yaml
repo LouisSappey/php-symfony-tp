@@ -12,3 +12,10 @@ users:
     account_status: "pending"
     current_subscription_id: 2
     watch_history_id: 2
+
+  - username: "user3"
+    email: "louis.sappey@gmail.com"
+    password: "password123"
+    account_status: "valid"
+    current_subscription_id: 1
+    watch_history_id: 1
