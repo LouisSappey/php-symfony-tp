@@ -86,9 +86,58 @@ class AuthController extends AbstractController
     
     
 
-    #[Route(path: '/reset-password', name: 'page_reset_password')]
-    public function resetPassword(): Response
-    {
-        return $this->render('auth/reset.html.twig');
+    #[Route(path: '/reset-password/{token}', name: 'page_reset_password')]
+    public function resetPassword(
+        string $token,
+        Request $request,
+        UserRepository $userRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        // Rechercher l'utilisateur avec le resetToken
+        $user = $userRepository->findOneBy(['resetPasswordToken' => $token]);
+    
+        // Si aucun utilisateur n'est trouvé, afficher une erreur
+        if (!$user) {
+            $this->addFlash('error', 'Jeton invalide ou utilisateur introuvable.');
+            return $this->redirectToRoute('page_forgot_password');
+        }
+    
+        // Si la requête est POST, traiter les mots de passe
+        if ($request->isMethod('POST')) {
+            $newPassword = $request->get('password');
+            $confirmPassword = $request->get('repeat-password');
+    
+            // Vérifier si les mots de passe correspondent
+            if ($newPassword !== $confirmPassword) {
+                $this->addFlash('error', 'Les mots de passe ne correspondent pas.');
+                return $this->render('auth/reset.html.twig', ['token' => $token]);
+            }
+    
+            // Vérifier les contraintes (longueur, caractères requis, etc.)
+            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $newPassword)) {
+                $this->addFlash(
+                    'error',
+                    'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.'
+                );
+                return $this->render('auth/reset.html.twig', ['token' => $token]);
+            }
+    
+            // Hacher le nouveau mot de passe
+            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+    
+            // Mettre à jour le mot de passe et effacer le resetToken
+            $user->setPassword($hashedPassword);
+            $user->setResetPasswordToken(null);
+    
+            $entityManager->persist($user);
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'Votre mot de passe a été réinitialisé avec succès. Veuillez vous connecter.');
+            return $this->redirectToRoute('page_login');
+        }
+    
+        // Afficher le formulaire de réinitialisation
+        return $this->render('auth/reset.html.twig', ['token' => $token]);
     }
+    
 }
