@@ -6,7 +6,7 @@ Launch the project with docker.
 
 -(docker compose up)
 
--Adminer is at localhost:8080
+-Adminer is at localhost:8080 (see .env for mdp it's in postgresql)
 
 -Front is at localhost:8000
 
