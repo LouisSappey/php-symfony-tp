@@ -1,10 +1,21 @@
 # php-symfony-tp
 
-Launch the project with docker.
+**Launch the project with docker.**
 
+```
 -(docker compose build)
+```
 
+```
 -(docker compose up)
+```
+
+After that you can go to streemi folder and launch fixtures:
+
+```
+cd streemi
+./launch-fixtures.sh
+```
 
 -Adminer is at localhost:8080 (see .env for mdp it's in postgresql)
 
